@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "cartoonizeme",
+    "slug": "cartoonizeme",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "cartoonizeme"
+}
