@@ -69,10 +69,7 @@ const Tabs = () => {
 };
 
 const RootStackScreen = ({ navigation }) => (
-    <RootStack.Navigator
-        screenOptions={({ route }) => ({
-            headerShown: false,
-        })}>
+    <RootStack.Navigator screenOptions={({ route }) => ({ headerShown: false })}>
         <RootStack.Screen name="Login" component={LoginScreen} />
         <RootStack.Screen name="Register" component={RegisterScreen} />
     </RootStack.Navigator>

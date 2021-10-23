@@ -1,13 +1,12 @@
 import React, { useState } from "react";
 import { ScrollView, StyleSheet, Text, View, Image, TouchableOpacity, KeyboardAvoidingView } from "react-native";
-import { useTheme } from "react-native-paper";
-import * as Animatable from "react-native-animatable";
 
 import { LOGO, GOOGLE_ICON, INSTAGRAM_ICON, HOST_URI } from "../../config/Constants";
 import InputTextField from "../../Components/InputTextField";
+import HomeScreen from "../Home.screen";
 
 function Login({ navigation }) {
-    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
 
     var loginActivity = async () => {
@@ -17,16 +16,20 @@ function Login({ navigation }) {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify({ email: email, password: password }),
+            body: JSON.stringify({ username: username, password: password }),
         })
             .then(res => res.json({ message: "success" }))
             .then(resData => {
                 console.log(resData);
                 alert(resData.message);
+                this.props.navigation.push("Home");
             })
             .catch(err => {
                 alert(err);
             });
+        // navigation.push({
+        //     component: HomeScreen,
+        // });
     };
 
     return (
@@ -69,7 +72,7 @@ function Login({ navigation }) {
                     or
                 </Text>
 
-                <InputTextField title="Email" onChangeText={email => setEmail(email)} />
+                <InputTextField title="Username" onChangeText={username => setUsername(username)} />
                 <InputTextField style={{ marginTop: 20, marginBottom: 8 }} title="Password" isSecure={true} onChangeText={password => setPassword(password)} />
 
                 {/* <Text style={[styles.text, styles.link, { textAlign: "right" }]}>Forgot Password?</Text> */}
@@ -85,7 +88,7 @@ function Login({ navigation }) {
                     </Text>
                 </Text>
 
-                <Text style={[styles.text, { fontSize: 14, color: "#ABB4BD", textAlign: "center", marginTop: 24 }]}>
+                <Text style={[styles.text, { fontSize: 14, color: "#ABB4BD", textAlign: "center", marginTop: 28 }]}>
                     Made with <Text style={[styles.text, { fontSize: 12 }]}>❤</Text> in India!
                 </Text>
             </View>
