@@ -7,7 +7,7 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "../Screens/Home.screen";
 import FileUploadScreen from "../Screens/FileUpload.screen";
 import UserProfile from "../Screens/UserProfile.screen";
-import SplashScreen from "../Screens/Splash.screen";
+import SplashScreen from "../Screens/FlashImage.screen";
 import LoginScreen from "../Screens/Authentication/Login.screen";
 import RegisterScreen from "../Screens/Authentication/Register.screen";
 import { StackActions } from "@react-navigation/routers";

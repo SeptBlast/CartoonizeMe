@@ -1,7 +1,7 @@
 import React from "react";
 import { View, StyleSheet, text } from "react-native";
 
-const SplashScreen = () => {
+const FlashImageScreen = () => {
     return (
         <View>
             <Text>Splash Screen</Text>
@@ -11,4 +11,4 @@ const SplashScreen = () => {
 
 const styles = StyleSheet.create({});
 
-export default SplashScreen;
+export default FlashImageScreen;
