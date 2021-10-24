@@ -31,7 +31,7 @@ const Tabs = () => {
                     let iconName;
 
                     if (route.name === "Home") {
-                        iconName = focused ? "home" : "home-outline";
+                        iconName = focused ? "image" : "image-outline";
                     } else if (route.name === "Login") {
                         iconName = focused ? "person" : "person-outline";
                     } else if (route.name === "FileUpload") {
@@ -51,7 +51,7 @@ const Tabs = () => {
                 headerShown: false,
             })}>
             <Tab.Screen name="Home" component={HomeScreen} />
-            <Tab.Screen
+            {/* <Tab.Screen
                 name="FileUpload"
                 component={FileUploadScreen}
                 options={{
@@ -62,8 +62,9 @@ const Tabs = () => {
                     },
                     tabBarButton: props => <CustomTabBarIcon {...props} />,
                 }}
-            />
-            <Tab.Screen name="UserProfile" component={UserProfile} />
+            /> */}
+            <Tab.Screen name="FileUpload" component={FileUploadScreen} />
+            {/* <Tab.Screen name="UserProfile" component={UserProfile} /> */}
         </Tab.Navigator>
     );
 };
