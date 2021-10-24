@@ -5,7 +5,7 @@
         "slug": "cartoonizeme",
         "version": "1.0.1-beta",
         "assetBundlePatterns": ["**/*"],
-        "description": "",
+        "description": "UI for CartoonizeMe! App",
         "githubUrl": "https://github.com/SeptBlast/CartoonizeMe"
     },
     "name": "CartoonizeMe!"
