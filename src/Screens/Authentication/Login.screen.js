@@ -23,7 +23,7 @@ function Login({ navigation }) {
             .then(resData => {
                 console.log(resData);
                 // alert(resData.message + " " + resData.username);
-                // this.props.navigation.push("Home");
+                // if (resData.indexOf("ACCEPTED") >= 0) navigation.push("Home");
             })
             .catch(err => {
                 console.log(err);
@@ -41,7 +41,7 @@ function Login({ navigation }) {
                     <Image source={LOGO} style={styles.logo} />
                     <Text style={[styles.text, { fontSize: 22, fontWeight: "600", marginTop: 20 }]}>CartoonizeMe!</Text>
                 </View>
-                <View
+                {/* <View
                     style={{
                         marginTop: 50,
                         flexDirection: "row",
@@ -59,7 +59,7 @@ function Login({ navigation }) {
                             <Text style={styles.text}>Instagram</Text>
                         </View>
                     </TouchableOpacity>
-                </View>
+                </View> 
 
                 <Text
                     style={[
@@ -72,8 +72,8 @@ function Login({ navigation }) {
                         },
                     ]}>
                     or
-                </Text>
-
+                </Text> */}
+                <View style={{ marginTop: 120 }} />
                 <InputTextField title="Username" onChangeText={username => setUsername(username)} />
                 <InputTextField style={{ marginTop: 20, marginBottom: 8 }} title="Password" isSecure={true} onChangeText={password => setPassword(password)} />
 

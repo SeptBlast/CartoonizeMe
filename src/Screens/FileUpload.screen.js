@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Button, Image, SafeAreaView } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button, Image, SafeAreaView, Platform } from "react-native";
 import { Camera } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import Ionicons from "react-native-vector-icons/Ionicons";
 import * as mime from "react-native-mime-types";
 
 import { HOST_URI } from "../config/Constants";
-import { getFileInfo } from "prettier";
 
 Ionicons.loadFont().then().catch();
 
@@ -56,14 +55,15 @@ const FileUpload = ({ navigation }) => {
     };
 
     const uploadImage = async elements => {
-        // console.log(image);
+        console.log(image);
         var mimetype = mime.lookup(image);
 
         const xhr = new XMLHttpRequest();
         const formData = new FormData();
         formData.append("file", {
-            uri: image,
+            uri: Platform.OS === "ios" ? image.replace("file://", "") : image,
             type: mimetype,
+            name: image.split("/")[image.split("/").length - 1],
         });
 
         xhr.upload.addEventListener("progress", handleProgress);
@@ -71,6 +71,7 @@ const FileUpload = ({ navigation }) => {
             setUploadProgress(100);
             setResponse(xhr.response);
             console.log(xhr.response);
+            console.log();
         });
         xhr.open("POST", `${HOST_URI}/cartoonizeme/uploadFile`);
         xhr.setRequestHeader("Content-Type", "multipart/form-data");
@@ -99,12 +100,6 @@ const FileUpload = ({ navigation }) => {
                 }}
                 /> */}
                 {/* <Button title="Click Photo!" onPress={() => takePicture()} /> */}
-                <TouchableOpacity onPress={() => pickImage()}>
-                    <View style={[styles.Button, { marginTop: 40 }]}>
-                        <Ionicons name="image" size={18} color="#FF1654" />
-                        <Text style={styles.text}>Pick Image from Gallery... </Text>
-                    </View>
-                </TouchableOpacity>
 
                 <View style={{ alignItems: "center", marginTop: 20 }}>
                     <Text style={styles.text}>Chosen Image</Text>
@@ -115,12 +110,18 @@ const FileUpload = ({ navigation }) => {
                 <View style={{ alignItems: "center", marginTop: 5, marginBottom: 15 }}>
                     <Text style={{ fontSize: 12 }}>Uploaded {uploadProgress}%</Text>
                 </View>
+                <TouchableOpacity onPress={() => pickImage()}>
+                    <View style={[styles.Button, { marginTop: 40 }]}>
+                        <Ionicons name="image" size={18} color="#FF1654" />
+                        <Text style={styles.text}>Pick Image from Gallery... </Text>
+                    </View>
+                </TouchableOpacity>
                 <TouchableOpacity style={{ marginBottom: 120 }} onPress={() => uploadImage()}>
                     <View style={styles.Button}>
                         <Ionicons name="cloud-upload" size={18} color="#FF1654" />
                         <Text style={styles.text}>Upload!! </Text>
                     </View>
-                    <Text style={{ fontSize: 12 }}>{response}</Text>
+                    {/* <Text style={{ fontSize: 12 }}>{response}</Text> */}
                 </TouchableOpacity>
             </View>
         </SafeAreaView>

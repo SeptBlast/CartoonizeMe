@@ -1,13 +1,13 @@
 import React, { Component } from "react";
 import { Text, View, StyleSheet, Button, Image, Dimensions, Modal } from "react-native";
-import { ScrollView, TouchableWithoutFeedback } from "react-native-gesture-handler";
+import { ScrollView, TouchableOpacity, TouchableWithoutFeedback } from "react-native-gesture-handler";
 import { SafeAreaView } from "react-native-safe-area-context";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
-import { LOGO_BACKGROUND } from "../config/Constants";
+import { LOGO_BACKGROUND, HOST_URI } from "../config/Constants";
 import ImageElement from "../Components/ImageElement";
 
-Ionicons.loadFont().then();
+Ionicons.loadFont().then().catch();
 
 export class Home extends Component {
     state = {
@@ -21,9 +21,45 @@ export class Home extends Component {
         this.setState({ modalVisible: visible });
     }
 
-    getImage() {
-        return this.state.modalImage;
+    async getImageList() {
+        var requestOptions = {
+            method: "GET",
+            headers: {},
+            redirect: "follow",
+        };
+
+        await fetch(HOST_URI + "/cartoonizeme/images", requestOptions)
+            .then(response => response.text())
+            // .then(result => console.log(result))
+            .catch(error => console.log("error", error));
     }
+
+    async getImageBase64(filename) {
+        var requestOptions = {
+            method: "GET",
+            headers: {},
+            redirect: "follow",
+        };
+
+        await fetch(HOST_URI + "/cartoonizeme/render/" + filename, requestOptions)
+            .then(response => response.text())
+            .then(result => console.log(result))
+            .catch(error => console.log("error", error));
+
+        // return this.state.modalImage;
+    }
+
+    getImage = async () => {
+        var imagesList = await this.getImageList()
+            .then()
+            .catch(error => console.log("error", error));
+
+        console.log(imagesList);
+
+        for (let i = 0; i < imagesList.length; i++) {
+            await this.getImageBase64(i);
+        }
+    };
 
     render() {
         let images = this.state.images.map((val, key) => {
@@ -41,28 +77,23 @@ export class Home extends Component {
                 <ScrollView style={{ backgroundColor: "#fff" }}>
                     <View styles={styles.titleContainer}>
                         <View style={{ flex: 1, flexDirection: "row-reverse", marginTop: 15, marginLeft: 20 }}>
-                            <Ionicons name="log-out-outline" size={36} style={{ transform: [{ rotateY: "180deg" }] }} />
+                            <Ionicons name="log-out-outline" size={24} style={{ transform: [{ rotateY: "180deg" }] }} />
                         </View>
                         <Text style={styles.title}>Welcome to the CartoonizeMe! 👻</Text>
-                        <Text style={styles.subTitle}>Image Library 👇🏻</Text>
+                        <View style={{ flex: 1, flexDirection: "row-reverse" }}>
+                            <TouchableOpacity onPress={() => this.getImage()}>
+                                <Ionicons name="refresh" size={18} style={{ marginTop: 15, marginRight: 20, fontWeight: "600" }} />
+                            </TouchableOpacity>
+                            <Text style={styles.subTitle}>Image Library 👇🏻</Text>
+                        </View>
+                    </View>
+
+                    <View>
+                        <Text onPress={() => this.getImage()}>Get Image List</Text>
                     </View>
 
                     <View style={{ marginTop: 20 }}>
-                        <View style={styles.imageContainer}>
-                            {/* <Modal style={styles.modal} animationType="fade" transparent={true} visible={this.state.modelVisible} onRequestClose={() => {}}>
-                                <View style={styles.modal}>
-                                    <Text
-                                        style={styles.text}
-                                        onPress={() => {
-                                            this.setModalVisible(false);
-                                        }}>
-                                        ❌ Close
-                                    </Text>
-                                    <ImageElement image={this.state.modalImage} />
-                                </View>
-                            </Modal> */}
-                            {images}
-                        </View>
+                        <View style={styles.imageContainer}>{images}</View>
                     </View>
                 </ScrollView>
             </SafeAreaView>
@@ -117,3 +148,18 @@ const styles = StyleSheet.create({
         color: "#fff",
     },
 });
+
+{
+    /* <Modal style={styles.modal} animationType="fade" transparent={true} visible={this.state.modelVisible} onRequestClose={() => {}}>
+                                <View style={styles.modal}>
+                                    <Text
+                                        style={styles.text}
+                                        onPress={() => {
+                                            this.setModalVisible(false);
+                                        }}>
+                                        ❌ Close
+                                    </Text>
+                                    <ImageElement image={this.state.modalImage} />
+                                </View>
+                            </Modal> */
+}

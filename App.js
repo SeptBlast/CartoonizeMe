@@ -9,7 +9,8 @@ export default function App() {
         <>
             <StatusBar backgroundColor="#fff" barStyle="dark-content" />
             <NavigationContainer>
-                <RootStackScreen />
+                {/* <RootStackScreen /> */}
+                <Tabs />
                 {/* <Routings /> */}
             </NavigationContainer>
         </>
