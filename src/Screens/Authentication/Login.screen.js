@@ -11,20 +11,22 @@ function Login({ navigation }) {
 
     var loginActivity = async () => {
         await fetch(HOST_URI + "/cartoonizeme/login", {
-            method: "GET",
+            method: "POST",
             headers: {
                 Accept: "application/json",
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({ username: username, password: password }),
+            redirect: "follow",
         })
-            .then(res => res.json({ message: "success" }))
+            .then(res => res.text())
             .then(resData => {
                 console.log(resData);
-                alert(resData.message);
-                this.props.navigation.push("Home");
+                // alert(resData.message + " " + resData.username);
+                // this.props.navigation.push("Home");
             })
             .catch(err => {
+                console.log(err);
                 alert(err);
             });
         // navigation.push({

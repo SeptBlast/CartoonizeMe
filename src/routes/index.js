@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { StyleSheet, TouchableOpacity, View, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
@@ -7,8 +7,11 @@ import Ionicons from "react-native-vector-icons/Ionicons";
 import HomeScreen from "../Screens/Home.screen";
 import FileUploadScreen from "../Screens/FileUpload.screen";
 import UserProfile from "../Screens/UserProfile.screen";
+import SplashScreen from "../Screens/Splash.screen";
 import LoginScreen from "../Screens/Authentication/Login.screen";
 import RegisterScreen from "../Screens/Authentication/Register.screen";
+import { StackActions } from "@react-navigation/routers";
+import { NavigationContainer } from "@react-navigation/native";
 
 // deepcode ignore PromiseNotCaughtGeneral: Promise handler not required
 Ionicons.loadFont().then();
@@ -76,7 +79,34 @@ const RootStackScreen = ({ navigation }) => (
     </RootStack.Navigator>
 );
 
-export { Tabs, RootStackScreen };
+const Routings = ({ navigation }) => {
+    const [isLoading, setIsLoading] = React.useState(true);
+
+    const checkUser = async () => {
+        const user = await AsyncStorage.getItem("user");
+        if (user) {
+            navigation.dispatch(StackActions.replace("Home"));
+        } else {
+            navigation.dispatch(StackActions.replace("Login"));
+        }
+        setIsLoading(false);
+    };
+
+    useEffect(() => {
+        checkUser();
+    }, []);
+
+    return (
+        <NavigationContainer>
+            <RootStack.Navigator>
+                {isLoading === true && <RootStack.Screen name="Splash" component={SplashScreen} />}
+                {isLoading === false ? <RootStack.Screen name="Auth" component={RootStackScreen} /> : <RootStack.Screen name="Home" component={Tabs} />}
+            </RootStack.Navigator>
+        </NavigationContainer>
+    );
+};
+
+export { Tabs, RootStackScreen, Routings };
 
 const styles = StyleSheet.create({
     tabBarStyle: {

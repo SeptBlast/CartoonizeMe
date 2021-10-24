@@ -2,15 +2,15 @@ import React from "react";
 import { StyleSheet, Text, View, StatusBar } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 
-import { Tabs, RootStackScreen } from "./src/routes";
+import { Tabs, RootStackScreen, Routings } from "./src/routes";
 
 export default function App() {
     return (
         <>
             <StatusBar backgroundColor="#fff" barStyle="dark-content" />
             <NavigationContainer>
-                {/* <RootStackScreen /> */}
-                <Tabs />
+                <RootStackScreen />
+                {/* <Routings /> */}
             </NavigationContainer>
         </>
     );

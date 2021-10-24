@@ -1,11 +1,12 @@
 {
     "expo": {
-        "name": "cartoonizeme",
+        "name": "CartoonizeMe!",
+        "icon": "./assets/images/1.png",
         "slug": "cartoonizeme",
-        "version": "1.0.0",
-        "assetBundlePatterns": [
-            "**/*"
-        ]
+        "version": "1.0.1-beta",
+        "assetBundlePatterns": ["**/*"],
+        "description": "",
+        "githubUrl": "https://github.com/SeptBlast/CartoonizeMe"
     },
     "name": "CartoonizeMe!"
 }
